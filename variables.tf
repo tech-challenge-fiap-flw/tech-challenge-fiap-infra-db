@@ -15,3 +15,9 @@ variable "db_name" {
   type        = string
   default     = "tech_challenge_fiap"
 }
+
+variable "environment" {
+  description = "Ambiente de deploy (dev, staging, prod)"
+  type        = string
+  default     = "dev"
+}

@@ -21,7 +21,7 @@ resource "aws_security_group" "rds_sg" {
 
 
 resource "aws_db_instance" "default" {
-  identifier           = "tech-challenge-db"
+  identifier           = "tech-challenge-db-${var.environment}"
   allocated_storage    = 20 
   storage_type         = "gp2"
   engine               = "mysql"
@@ -38,7 +38,7 @@ resource "aws_db_instance" "default" {
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   tags = {
-    Environment = "Dev"
+    Environment = var.environment
     Project     = "Tech Challenge"
   }
 }
