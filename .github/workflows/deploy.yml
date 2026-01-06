@@ -31,11 +31,12 @@ jobs:
         aws-region: us-east-1
 
 
-    - name: Destroy Security Group (se existir)
-      run: terraform destroy -target=aws_security_group.rds_sg -auto-approve || true
 
     - name: Terraform Init
       run: terraform init
+
+    - name: Destroy Security Group (se existir)
+      run: terraform destroy -target=aws_security_group.rds_sg -auto-approve || true
 
     - name: Terraform Workspace
       run: |
