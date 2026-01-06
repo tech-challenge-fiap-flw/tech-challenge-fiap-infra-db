@@ -8,7 +8,7 @@ variable "db_password" {
   description = "Senha master do banco de dados"
   type        = string
   sensitive   = true
-  default     = "Staging@1234!"
+  default     = "Staging#1234!"
 }
 
 variable "db_name" {
