@@ -1,6 +1,6 @@
 resource "aws_security_group" "rds_sg" {
-  name        = "rds-security-group"
-  description = "Permite acesso ao MySQL"
+  name        = "rds-security-group-${var.environment}"
+  description = "Permite acesso ao MySQL (${var.environment})"
 
   
   ingress {
@@ -40,5 +40,6 @@ resource "aws_db_instance" "default" {
   tags = {
     Environment = var.environment
     Project     = "Tech Challenge"
+    Name        = "rds-security-group-${var.environment}"
   }
 }
