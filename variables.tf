@@ -19,5 +19,5 @@ variable "db_name" {
 variable "environment" {
   description = "Ambiente de deploy (dev, staging, prod)"
   type        = string
-  default     = "dev"
+  default     = "staging"
 }
