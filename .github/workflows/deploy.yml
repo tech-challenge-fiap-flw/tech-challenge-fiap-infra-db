@@ -38,7 +38,7 @@ jobs:
         terraform workspace select ${{ env.ENVIRONMENT }} || terraform workspace new ${{ env.ENVIRONMENT }}
 
     - name: Terraform Plan
-      run: terraform plan -var="environment=${{ env.ENVIRONMENT }}" -var="db_password=${{ secrets.DB_PASSWORD }}" -out=tfplan
+      run: terraform plan -var="environment=${{ env.ENVIRONMENT }}" -out=tfplan
 
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
