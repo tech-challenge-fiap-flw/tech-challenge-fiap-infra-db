@@ -12,9 +12,6 @@ output "docdb_password" {
   sensitive = true
 }
 
-output "docdb_database" {
-  value = var.docdb_database
-}
 output "rds_endpoint" {
   description = "O endpoint para conectar no banco de dados"
   value       = aws_db_instance.default.endpoint
