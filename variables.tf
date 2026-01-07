@@ -14,7 +14,7 @@ variable "docdb_password" {
 variable "docdb_database" {
   description = "Nome do database do DocumentDB"
   type        = string
-  default     = "tech_challenge-${var.environment}"
+  default     = "tech_challenge"
 }
 
 variable "private_subnet_ids" {
@@ -38,7 +38,7 @@ variable "db_password" {
 variable "db_name" {
   description = "Nome do database inicial"
   type        = string
-  default     = "tech_challenge_fiap-${var.environment}"
+  default     = "tech_challenge_fiap"
 }
 
 variable "environment" {
