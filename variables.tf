@@ -11,12 +11,6 @@ variable "docdb_password" {
   default     = "Docdb#1234!"
 }
 
-variable "docdb_database" {
-  description = "Nome do database do DocumentDB"
-  type        = string
-  default     = "tech_challenge"
-}
-
 variable "private_subnet_ids" {
   description = "Lista de subnets privadas para o DocumentDB"
   type        = list(string)
