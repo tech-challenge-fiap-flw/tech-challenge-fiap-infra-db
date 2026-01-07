@@ -1,3 +1,45 @@
+resource "aws_security_group" "docdb_sg" {
+  name        = "docdb-security-group-${var.environment}"
+  description = "Permite acesso ao DocumentDB (${var.environment})"
+
+  ingress {
+    from_port   = 27017
+    to_port     = 27017
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_docdb_subnet_group" "default" {
+  name       = "docdb-subnet-group-${var.environment}"
+  subnet_ids = var.private_subnet_ids
+  description = "Subnet group for DocumentDB"
+}
+
+resource "aws_docdb_cluster" "default" {
+  cluster_identifier      = "docdb-cluster-${var.environment}"
+  engine                 = "docdb"
+  master_username        = var.docdb_username
+  master_password        = var.docdb_password
+  db_subnet_group_name   = aws_docdb_subnet_group.default.name
+  vpc_security_group_ids = [aws_security_group.docdb_sg.id]
+  skip_final_snapshot    = true
+}
+
+resource "aws_docdb_cluster_instance" "default" {
+  count              = 1
+  identifier         = "docdb-instance-${var.environment}-${count.index}"
+  cluster_identifier = aws_docdb_cluster.default.id
+  instance_class     = "db.t3.medium"
+  engine             = "docdb"
+}
 terraform {
   backend "s3" {
     bucket         = "tech-challenge-fiap-terraform-state"
