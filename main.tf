@@ -31,6 +31,7 @@ resource "aws_docdb_cluster" "default" {
   db_subnet_group_name   = aws_docdb_subnet_group.default.name
   vpc_security_group_ids = [aws_security_group.docdb_sg.id]
   skip_final_snapshot    = true
+  database_name          = "${var.docdb_database}-${var.environment}"
 }
 
 resource "aws_docdb_cluster_instance" "default" {
@@ -79,7 +80,7 @@ resource "aws_db_instance" "default" {
   engine_version       = "8.0" 
   instance_class       = "db.t3.micro"
   
-  db_name              = var.db_name
+  db_name              = "${var.db_name}-${var.environment}"
   username             = var.db_username
   password             = var.db_password
   
