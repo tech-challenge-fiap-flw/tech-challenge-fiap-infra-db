@@ -1,6 +1,7 @@
 resource "aws_security_group" "docdb_sg" {
   name        = "docdb-security-group-${var.environment}"
   description = "Permite acesso ao DocumentDB (${var.environment})"
+  vpc_id      = "vpc-0c55a47e87d6fc49d"
 
   ingress {
     from_port   = 27017
