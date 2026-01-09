@@ -10,13 +10,18 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    environment: ${{ github.ref_name == 'main' && 'prod' || 'staging' }}
+
     env:
       TF_VERSION: '1.5.0'
-      ENVIRONMENT: ${{ github.ref_name == 'main' && 'prod' || 'staging' }}
+      ENV_NAME: ${{ github.ref_name == 'main' && 'prod' || 'staging' }}
+      
+      TF_VAR_environment: ${{ github.ref_name == 'main' && 'prod' || 'staging' }}
       TF_VAR_docdb_username: ${{ secrets.DOCDB_USERNAME }}
       TF_VAR_docdb_password: ${{ secrets.DOCDB_PASSWORD }}
-      TF_VAR_private_subnet_id_1: ${{ secrets.PRIVATE_SUBNET_ID_1 }}
-      TF_VAR_private_subnet_id_2: ${{ secrets.PRIVATE_SUBNET_ID_2 }}
+      
+      TF_VAR_private_subnet_ids: '["${{ secrets.PRIVATE_SUBNET_ID_1 }}", "${{ secrets.PRIVATE_SUBNET_ID_2 }}"]'
+      
       TF_VAR_vpc_id: ${{ secrets.VPC_ID }}
       TF_VAR_db_username: ${{ secrets.DB_USERNAME }}
       TF_VAR_db_password: ${{ secrets.DB_PASSWORD }}
@@ -38,8 +43,6 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-
-
     - name: Terraform Init
       run: terraform init
 
@@ -48,10 +51,10 @@ jobs:
 
     - name: Terraform Workspace
       run: |
-        terraform workspace select ${{ env.ENVIRONMENT }} || terraform workspace new ${{ env.ENVIRONMENT }}
+        terraform workspace select ${{ env.ENV_NAME }} || terraform workspace new ${{ env.ENV_NAME }}
 
     - name: Terraform Plan
-      run: terraform plan -var="docdb_username=${{ secrets.DOCDB_USERNAME }}" -var="docdb_password=${{ secrets.DOCDB_PASSWORD }}" -var="private_subnet_ids=[\"${{ secrets.PRIVATE_SUBNET_ID_1 }}\",\"${{ secrets.PRIVATE_SUBNET_ID_2 }}\"]" -var="vpc_id=${{ secrets.VPC_ID }}" -var="db_username=${{ secrets.DB_USERNAME }}" -var="db_password=${{ secrets.DB_PASSWORD }}" -var="db_name=${{ secrets.DB_NAME }}" -var="environment=${{ env.ENVIRONMENT }}" -out=tfplan
+      run: terraform plan -out=tfplan
 
     - name: Terraform Apply
       run: terraform apply -auto-approve tfplan
