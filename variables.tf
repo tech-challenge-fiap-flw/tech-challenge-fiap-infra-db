@@ -16,6 +16,13 @@ variable "private_subnet_ids" {
   type        = list(string)
   default     = ["subnet-06505d8dbaaa297e9", "subnet-068174308c9776a7b"]
 }
+
+variable "vpc_id" {
+  description = "ID da VPC onde os recursos serão criados"
+  type        = string
+  default     = "vpc-0c55a47e87d6fc49d"
+}
+
 variable "db_username" {
   description = "Usuário master do banco de dados"
   type        = string
