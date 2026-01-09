@@ -31,7 +31,9 @@ resource "aws_docdb_cluster" "default" {
   master_password        = var.docdb_password
   db_subnet_group_name   = aws_docdb_subnet_group.default.name
   vpc_security_group_ids = [aws_security_group.docdb_sg.id]
-  skip_final_snapshot    = true
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_docdb_cluster_instance" "default" {
@@ -85,7 +87,9 @@ resource "aws_db_instance" "default" {
   password             = var.db_password
   
   parameter_group_name = "default.mysql8.0"
-  skip_final_snapshot  = true 
+  lifecycle {
+    prevent_destroy = true
+  }
   publicly_accessible  = true 
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
