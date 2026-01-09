@@ -46,7 +46,7 @@ resource "aws_docdb_cluster_instance" "default" {
 terraform {
   backend "s3" {
     bucket         = "tech-challenge-fiap-terraform-state"
-    key            = "tech-challenge-fiap-infra-db/terraform.tfstate"
+    key            = "tech-challenge-fiap-infra-db/terraform-${var.environment}.tfstate"
     region         = "us-east-1"
     dynamodb_table = "tech-challenge-fiap-terraform-locks"
     encrypt        = true
