@@ -51,26 +51,7 @@ jobs:
         terraform workspace select ${{ env.ENVIRONMENT }} || terraform workspace new ${{ env.ENVIRONMENT }}
 
     - name: Terraform Plan
-      run: |
-        terraform plan \
-          -var="docdb_username=${{ secrets.DOCDB_USERNAME }}" \
-          -var="docdb_password=${{ secrets.DOCDB_PASSWORD }}" \
-          -var="private_subnet_ids=[\"${{ secrets.PRIVATE_SUBNET_ID_1 }}\",\"${{ secrets.PRIVATE_SUBNET_ID_2 }}\"]" \
-          -var="vpc_id=${{ secrets.VPC_ID }}" \
-          -var="db_username=${{ secrets.DB_USERNAME }}" \
-          -var="db_password=${{ secrets.DB_PASSWORD }}" \
-          -var="db_name=${{ secrets.DB_NAME }}" \
-          -var="environment=${{ env.ENVIRONMENT }}" \
-          -out=tfplan
+      run: terraform plan -var="docdb_username=${{ secrets.DOCDB_USERNAME }}" -var="docdb_password=${{ secrets.DOCDB_PASSWORD }}" -var="private_subnet_ids=[\"${{ secrets.PRIVATE_SUBNET_ID_1 }}\",\"${{ secrets.PRIVATE_SUBNET_ID_2 }}\"]" -var="vpc_id=${{ secrets.VPC_ID }}" -var="db_username=${{ secrets.DB_USERNAME }}" -var="db_password=${{ secrets.DB_PASSWORD }}" -var="db_name=${{ secrets.DB_NAME }}" -var="environment=${{ env.ENVIRONMENT }}" -out=tfplan
 
     - name: Terraform Apply
-      run: |
-        terraform apply -auto-approve tfplan \
-          -var="docdb_username=${{ secrets.DOCDB_USERNAME }}" \
-          -var="docdb_password=${{ secrets.DOCDB_PASSWORD }}" \
-          -var="private_subnet_ids=[\"${{ secrets.PRIVATE_SUBNET_ID_1 }}\",\"${{ secrets.PRIVATE_SUBNET_ID_2 }}\"]" \
-          -var="vpc_id=${{ secrets.VPC_ID }}" \
-          -var="db_username=${{ secrets.DB_USERNAME }}" \
-          -var="db_password=${{ secrets.DB_PASSWORD }}" \
-          -var="db_name=${{ secrets.DB_NAME }}" \
-          -var="environment=${{ env.ENVIRONMENT }}"
+      run: terraform apply -auto-approve tfplan
