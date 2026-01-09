@@ -46,9 +46,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    - name: Destroy Security Group (se existir)
-      run: terraform destroy -target=aws_security_group.rds_sg -auto-approve || true
-
     - name: Terraform Workspace
       run: |
         terraform workspace select ${{ env.ENV_NAME }} || terraform workspace new ${{ env.ENV_NAME }}
