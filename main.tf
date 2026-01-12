@@ -25,7 +25,8 @@ resource "aws_docdb_subnet_group" "default" {
 }
 
 resource "aws_docdb_cluster" "default" {
-  cluster_identifier      = "docdb-cluster-${var.environment}"
+  skip_final_snapshot    = true
+  cluster_identifier     = "docdb-cluster-${var.environment}"
   engine                 = "docdb"
   master_username        = var.docdb_username
   master_password        = var.docdb_password
@@ -72,12 +73,13 @@ resource "aws_security_group" "rds_sg" {
 
 
 resource "aws_db_instance" "default" {
-  identifier           = "tech-challenge-db-${var.environment}"
-  allocated_storage    = 20 
-  storage_type         = "gp2"
-  engine               = "mysql"
-  engine_version       = "8.0" 
-  instance_class       = "db.t3.micro"
+  skip_final_snapshot = true
+  identifier          = "tech-challenge-db-${var.environment}"
+  allocated_storage   = 20 
+  storage_type        = "gp2"
+  engine              = "mysql"
+  engine_version      = "8.0" 
+  instance_class      = "db.t3.micro"
   
   db_name              = "${var.db_name}_${var.environment}"
   username             = var.db_username
