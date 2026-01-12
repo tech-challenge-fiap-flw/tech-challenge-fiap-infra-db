@@ -19,13 +19,14 @@ resource "aws_security_group" "docdb_sg" {
 }
 
 resource "aws_docdb_subnet_group" "default" {
-  name       = "docdb-subnet-group-${var.environment}"
-  subnet_ids = var.private_subnet_ids
+  name        = "docdb-subnet-group-${var.environment}"
+  subnet_ids  = var.private_subnet_ids
   description = "Subnet group for DocumentDB"
 }
 
 resource "aws_docdb_cluster" "default" {
-  cluster_identifier      = "docdb-cluster-${var.environment}"
+  skip_final_snapshot    = true
+  cluster_identifier     = "docdb-cluster-${var.environment}"
   engine                 = "docdb"
   master_username        = var.docdb_username
   master_password        = var.docdb_password
@@ -53,15 +54,15 @@ resource "aws_security_group" "rds_sg" {
   name        = "rds-security-group-${var.environment}"
   description = "Permite acesso ao MySQL (${var.environment})"
 
-  
+
   ingress {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] 
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
-  
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -72,19 +73,20 @@ resource "aws_security_group" "rds_sg" {
 
 
 resource "aws_db_instance" "default" {
-  identifier           = "tech-challenge-db-${var.environment}"
-  allocated_storage    = 20 
-  storage_type         = "gp2"
-  engine               = "mysql"
-  engine_version       = "8.0" 
-  instance_class       = "db.t3.micro"
-  
-  db_name              = "${var.db_name}_${var.environment}"
-  username             = var.db_username
-  password             = var.db_password
-  
-  parameter_group_name = "default.mysql8.0"
-  publicly_accessible  = true 
+  skip_final_snapshot = true
+  identifier          = "tech-challenge-db-${var.environment}"
+  allocated_storage   = 20
+  storage_type        = "gp2"
+  engine              = "mysql"
+  engine_version      = "8.0"
+  instance_class      = "db.t3.micro"
+
+  db_name  = "${var.db_name}_${var.environment}"
+  username = var.db_username
+  password = var.db_password
+
+  parameter_group_name   = "default.mysql8.0"
+  publicly_accessible    = true
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
 
   tags = {

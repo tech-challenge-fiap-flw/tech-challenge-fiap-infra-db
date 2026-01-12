@@ -8,7 +8,7 @@ output "docdb_username" {
 }
 
 output "docdb_password" {
-  value = var.docdb_password
+  value     = var.docdb_password
   sensitive = true
 }
 
