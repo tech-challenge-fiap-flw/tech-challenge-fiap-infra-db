@@ -53,7 +53,7 @@ terraform {
 resource "aws_security_group" "rds_sg" {
   name        = "rds-security-group-${var.environment}"
   description = "Permite acesso ao MySQL (${var.environment})"
-
+  vpc_id      = var.vpc_id
 
   ingress {
     from_port   = 3306
