@@ -16,7 +16,7 @@ Veja os arquivos principais: [provider.tf](provider.tf), [main.tf](main.tf), [va
 **Arquitetura**
 - DocumentDB: `aws_docdb_subnet_group`, `aws_security_group`, `aws_docdb_cluster`, `aws_docdb_cluster_instance`.
 - RDS MySQL: `aws_security_group`, `aws_db_instance`.
-- Estado Remoto: `terraform { backend "s3" }` configurado para bucket `tech-challenge-fiap-terraform-state`, chave `tech-challenge-fiap-infra-db/terraform.tfstate` e tabela DynamoDB `tech-challenge-fiap-terraform-locks` na região `us-east-1`.
+- Estado Remoto: `terraform { backend "s3" }` configurado para bucket `tech-challenge-fiap-tf-state`, chave `tech-challenge-fiap-infra-db/terraform.tfstate` e tabela DynamoDB `tech-challenge-fiap-terraform-locks` na região `us-east-1`.
 
 ## Pré-requisitos
 - Terraform 1.5+ e AWS CLI configurados.

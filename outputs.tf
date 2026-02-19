@@ -20,3 +20,10 @@ output "rds_endpoint" {
 output "rds_username" {
   value = var.db_username
 }
+
+output "microservice_databases" {
+  description = "Bancos de dados criados para cada microsserviço"
+  value = {
+    for name in var.microservices : name => "${name}_${var.environment}"
+  }
+}

@@ -47,3 +47,9 @@ variable "environment" {
   type        = string
   default     = "staging"
 }
+
+variable "microservices" {
+  description = "Lista de microsserviços que terão banco de dados próprio"
+  type        = list(string)
+  default     = ["os_service", "billing_service", "execution_service"]
+}

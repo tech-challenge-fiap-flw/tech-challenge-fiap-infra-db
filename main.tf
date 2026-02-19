@@ -43,7 +43,7 @@ resource "aws_docdb_cluster_instance" "default" {
 }
 terraform {
   backend "s3" {
-    bucket         = "tech-challenge-fiap-terraform-state"
+    bucket         = "tech-challenge-fiap-tf-state"
     key            = "tech-challenge-fiap-infra-db/terraform.tfstate"
     region         = "us-east-1"
     dynamodb_table = "tech-challenge-fiap-terraform-locks"
@@ -81,7 +81,6 @@ resource "aws_db_instance" "default" {
   engine_version      = "8.0"
   instance_class      = "db.t3.micro"
 
-  db_name  = "${var.db_name}_${var.environment}"
   username = var.db_username
   password = var.db_password
 
@@ -94,4 +93,9 @@ resource "aws_db_instance" "default" {
     Project     = "Tech Challenge"
     Name        = "rds-security-group-${var.environment}"
   }
+}
+
+resource "mysql_database" "microservice" {
+  for_each = toset(var.microservices)
+  name     = "${each.value}_${var.environment}"
 }
