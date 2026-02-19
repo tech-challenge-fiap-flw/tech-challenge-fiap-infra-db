@@ -93,6 +93,8 @@ resource "aws_db_instance" "default" {
   username = var.db_username
   password = var.db_password
 
+  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
+
   parameter_group_name   = "default.mysql8.0"
   publicly_accessible    = true
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
