@@ -71,6 +71,15 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "rds-subnet-group-${var.environment}"
+  subnet_ids = var.private_subnet_ids # Usa as mesmas subnets do DocDB
+  description = "Subnet group para o RDS MySQL"
+
+  tags = {
+    Name = "rds-subnet-group-${var.environment}"
+  }
+}
 
 resource "aws_db_instance" "default" {
   skip_final_snapshot = true
