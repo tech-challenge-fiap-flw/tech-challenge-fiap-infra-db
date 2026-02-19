@@ -14,13 +14,13 @@ variable "docdb_password" {
 variable "private_subnet_ids" {
   description = "Lista de subnets privadas para o DocumentDB"
   type        = list(string)
-  default     = ["subnet-06505d8dbaaa297e9", "subnet-068174308c9776a7b"]
+  default     = ["subnet-008a8a1b03054cbca", "subnet-074e7ffb9ef9650bb"]
 }
 
 variable "vpc_id" {
   description = "ID da VPC onde os recursos serão criados"
   type        = string
-  default     = "vpc-0c55a47e87d6fc49d"
+  default     = "vpc-001ded259b3d2d65a"
 }
 
 variable "db_username" {
